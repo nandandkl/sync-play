@@ -1,4 +1,4 @@
-# SyncPlay Extension
+# SyncPlay
 
 SyncPlay is a browser extension that allows you to watch videos together in real-time by synchronizing playback across multiple browsers.
 
@@ -7,6 +7,13 @@ SyncPlay is a browser extension that allows you to watch videos together in real
 -   **Playback Sync**: Synchronizes play, pause, and seek events.
 -   **HTML5 Video Support**: Works on websites using standard HTML5 `<video>` tags.
 -   **Room System**: Join or create rooms using a simple Room Code.
+
+## Interface
+
+<p align="center">
+  <img src="https://github.com/nandandkl/sync-play/blob/48f6b6e5bc9001bcbd248af236ca93c9a7b56501/icons/screenshot-1.png" width="40%">
+  <img src="https://github.com/nandandkl/sync-play/blob/48f6b6e5bc9001bcbd248af236ca93c9a7b56501/icons/screenshot-2.png" width="40%">
+</p>
 
 ## Installation (Developer Mode)
 
