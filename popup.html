@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncPlay</title>
+    <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="icons/icon48.png" alt="SyncPlay" class="logo">
+                <h1 class="app-name">SyncPlay</h1>
+            </div>
+            <div id="connection-indicator" class="connection-indicator"></div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Connection Form (Visible when disconnected) -->
+            <div id="connect-screen" class="screen">
+                <div class="input-group">
+                    <label for="username">Your Name</label>
+                    <input type="text" id="username" placeholder="Enter your name..." spellcheck="false">
+                </div>
+
+                <div class="input-group">
+                    <label for="room-code">Room Code</label>
+                    <input type="text" id="room-code" placeholder="Enter room name..." spellcheck="false">
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">Start as Host</span>
+                    <label class="switch">
+                        <input type="checkbox" id="is-host">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <button id="connect-btn" class="btn btn-primary">
+                    <span class="btn-text">Join Room</span>
+                </button>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboard-screen" class="screen hidden">
+                <div class="room-info">
+                    <span class="room-label">Current Room</span>
+                    <h2 id="room-display" class="room-name">--</h2>
+                    <div class="user-info-display">
+                        <span id="username-display" class="username-badge">--</span>
+                        <span id="role-display" class="role-badge">Viewer</span>
+                    </div>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-icon-container">
+                        <div id="play-state-icon" class="status-icon">⏸</div>
+                    </div>
+                    <div class="status-details">
+                        <span id="video-status-text" class="status-text">Waiting for video...</span>
+                        <span id="time-display" class="time-text">0:00</span>
+                    </div>
+                </div>
+
+                <!-- Connected Users List -->
+                <div class="users-section">
+                    <h3 class="section-title">Connected Users</h3>
+                    <div id="user-list" class="user-list">
+                        <!-- Users will be populated here -->
+                    </div>
+                </div>
+
+                <button id="disconnect-btn" class="btn btn-danger">
+                    <span class="btn-text">Disconnect</span>
+                </button>
+            </div>
+
+            <!-- Error/Message Toast -->
+            <div id="toast" class="toast hidden"></div>
+        </main>
+
+        <footer class="footer">
+            <span class="version">v1.2.0 • Sync Together</span>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
