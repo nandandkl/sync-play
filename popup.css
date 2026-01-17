@@ -20,13 +20,33 @@
     padding: 0;
 }
 
+html,
 body {
     width: 320px;
     height: 480px;
     font-family: var(--font-family);
     background: var(--bg-gradient);
     color: var(--text-primary);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Custom Scrollbar for Main Body */
+body::-webkit-scrollbar {
+    width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .app-container {
@@ -242,7 +262,7 @@ input:checked+.slider:before {
 /* Room Info (Dashboard) */
 .room-info {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 
 .room-label {
@@ -255,9 +275,9 @@ input:checked+.slider:before {
 }
 
 .room-name {
-    font-size: 28px;
+    font-size: 24px;
     color: white;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .role-badge {
@@ -276,10 +296,10 @@ input:checked+.slider:before {
 .status-card {
     background: var(--glass-bg);
     border-radius: var(--radius-lg);
-    padding: 20px;
+    padding: 16px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     border: 1px solid var(--glass-border);
 }
 
@@ -331,7 +351,7 @@ input:checked+.slider:before {
 
 /* User List Section */
 .users-section {
-    margin: 16px 0;
+    margin: 12px 0;
     text-align: left;
 }
 
@@ -348,7 +368,7 @@ input:checked+.slider:before {
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     padding: 8px;
-    max-height: 120px;
+    max-height: 160px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -409,7 +429,7 @@ input:checked+.slider:before {
     margin-top: auto;
     font-size: 11px;
     color: rgba(255, 255, 255, 0.3);
-    padding-top: 16px;
+    padding-top: 8px;
 }
 
 .toast {
@@ -431,9 +451,11 @@ input:checked+.slider:before {
 }
 
 .toast.hidden {
-    transform: translateY(150%);
+    transform: translateY(200%);
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
+    box-shadow: none;
 }
 
 .toast:not(.hidden) {

@@ -64,7 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderUserList(users) {
         elements.userList.innerHTML = '';
-        if (!users || users.length === 0) return;
+        const titleElement = document.querySelector('.users-section .section-title');
+
+        if (!users || users.length === 0) {
+            if (titleElement) titleElement.textContent = 'Connected Users (0)';
+            return;
+        }
+
+        if (titleElement) {
+            titleElement.textContent = `Connected Users (${users.length})`;
+        }
 
         users.forEach(user => {
             const div = document.createElement('div');
