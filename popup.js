@@ -215,13 +215,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRoomName = null;
 
     function updateVideoStatus(data) {
-        elements.videoStatusText.textContent = data.type === 'play' ? 'Playing' : 'Paused';
-        elements.playStateIcon.textContent = data.type === 'play' ? '▶️' : '⏸';
+        if (data.type === 'seek') {
+            elements.videoStatusText.textContent = 'Seek';
+            elements.playStateIcon.textContent = '⌕';
+        } else {
+            elements.videoStatusText.textContent = data.type === 'play' ? 'Playing' : 'Paused';
+            elements.playStateIcon.textContent = data.type === 'play' ? '⏸' : '▶';
+        }
         elements.timeDisplay.textContent = formatTime(data.time);
 
         // Visual flair
         if (data.type === 'play') {
             elements.playStateIcon.style.textShadow = "0 0 10px rgba(16, 185, 129, 0.5)";
+        } else if (data.type === 'seek') {
+            elements.playStateIcon.style.textShadow = "0 0 10px rgba(99, 102, 241, 0.5)";
         } else {
             elements.playStateIcon.style.textShadow = "none";
         }
