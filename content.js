@@ -9,8 +9,8 @@ console.log('SyncPlay Content Script Loaded (Enhanced)');
 function findVideoRecursive(root) {
     if (!root) return null;
 
-    // 1. Check current root
-    let v = root.querySelector('video');
+    // 1. Check current root with multiple selectors
+    let v = root.querySelector('video, .html5-main-video, [class*="video-stream"]');
     if (v) return v;
 
     // 2. Check Shadow roots
@@ -59,9 +59,21 @@ function attachVideoListeners(video) {
     videoElement = video;
     console.log('SyncPlay: Attached to video', video);
 
-    video.addEventListener('play', () => sendVideoEvent('play'));
-    video.addEventListener('pause', () => sendVideoEvent('pause'));
-    video.addEventListener('seeked', () => sendVideoEvent('seek'));
+    // Register this frame with the background script
+    chrome.runtime.sendMessage({ action: 'register_frame' }).catch(() => {});
+
+    video.addEventListener('play', () => {
+        console.log('SyncPlay: Detected play event');
+        sendVideoEvent('play');
+    });
+    video.addEventListener('pause', () => {
+        console.log('SyncPlay: Detected pause event');
+        sendVideoEvent('pause');
+    });
+    video.addEventListener('seeked', () => {
+        console.log('SyncPlay: Detected seeked event at', video.currentTime);
+        sendVideoEvent('seek');
+    });
 }
 
 // Initial check
@@ -114,19 +126,23 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             applyRemoteState(data);
         }
     } else if (request.action === 'get_time_for_sync') {
+        console.log('SyncPlay: Received get_time_for_sync request', request.data);
         if (videoElement) {
             const status = {
                 state: videoElement.paused ? 'pause' : 'play',
                 time: videoElement.currentTime
             };
+            console.log('SyncPlay: Sending sync_response back', status);
             chrome.runtime.sendMessage({
                 action: 'sync_response',
-                data: { to: request.data.from, status: status }
+                data: { to: request.data.from, room: request.data.room, status: status }
             }, () => {
                 if (chrome.runtime.lastError) {
                     console.log("SyncPlay: Sync response failed", chrome.runtime.lastError.message);
                 }
             });
+        } else {
+            console.warn('SyncPlay: Cannot respond to sync_req, no video found.');
         }
     }
     else if (request.action === 'get_video_status') {
@@ -148,7 +164,7 @@ function applyRemoteState(data) {
 
     console.log('SyncPlay: Applying remote state', data);
 
-    const DRIFT_THRESHOLD = 0.5;
+    const DRIFT_THRESHOLD = 0.3; // tighter sync
     if (Math.abs(videoElement.currentTime - data.time) > DRIFT_THRESHOLD) {
         console.log(`SyncPlay: Seek from ${videoElement.currentTime} to ${data.time}`);
         videoElement.currentTime = data.time;
