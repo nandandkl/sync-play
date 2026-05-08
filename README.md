@@ -34,5 +34,5 @@ To install the extension manually:
 
 ## Technical Details
 
--   **Signaling Server**: The extension connects to `https://sync-play-connect-production.up.railway.app` for real-time communication.
+-   **Signaling Server**: The extension connects to `https://sync-play-connect.onrender.com` for real-time communication.
 -   **Permissions**: Requires `activeTab`, `scripting`, and `storage` permissions to function.

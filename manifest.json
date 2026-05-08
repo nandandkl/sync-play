@@ -51,6 +51,6 @@
         }
     ],
     "content_security_policy": {
-        "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://sync-play-connect-production.up.railway.app wss://sync-play-connect-production.up.railway.app"
+        "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https: wss:"
     }
 }

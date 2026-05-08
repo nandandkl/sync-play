@@ -60,7 +60,7 @@ function attachVideoListeners(video) {
     console.log('SyncPlay: Attached to video', video);
 
     // Register this frame with the background script
-    chrome.runtime.sendMessage({ action: 'register_frame' }).catch(() => {});
+    chrome.runtime.sendMessage({ action: 'register_frame' }).catch(() => { });
 
     video.addEventListener('play', () => {
         console.log('SyncPlay: Detected play event');

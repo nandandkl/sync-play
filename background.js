@@ -37,7 +37,7 @@ function ensureSocket() {
     }
 
     console.log('Background: Initializing socket connection...');
-    
+
     // Wake up the server (Render cold start)
     console.log('Background: Waking up server at', SERVER_URL);
     fetch(SERVER_URL).then(r => r.text()).then(text => {
@@ -50,7 +50,7 @@ function ensureSocket() {
         reconnectionAttempts: 10,
         reconnectionDelay: 2000,
         timeout: 20000, // 20s timeout for cold starts
-        transports: ['websocket', 'polling'] 
+        transports: ['websocket', 'polling']
     });
 
     socket.on('connect', () => {
@@ -140,7 +140,7 @@ function ensureSocket() {
                 chrome.tabs.sendMessage(tabId, {
                     action: 'get_time_for_sync',
                     data: { from: data.from, room: room }
-                }).catch((err) => { 
+                }).catch((err) => {
                     console.error(`Background: Failed to send get_time_for_sync to tab ${tabId}:`, err.message);
                 });
             }
@@ -178,7 +178,7 @@ function connectTab(tabId, room, username, isHost) {
                 // 1. Store Session on success
                 tabSessions.set(tabId, { room, username, isHost });
                 console.log(`Background: Tab ${tabId} joined ${room} (isHost: ${isHost})`);
-                
+
                 // If we are a viewer joining, request initial state
                 if (!isHost) {
                     console.log(`Background: Emitting sync_req for room: ${room}`);
@@ -241,7 +241,7 @@ function sendMessageToRoom(room, action, data) {
                 }
             } else {
                 // Fallback to top frame if no frames registered yet
-                chrome.tabs.sendMessage(tabId, { action, data }).catch(() => {});
+                chrome.tabs.sendMessage(tabId, { action, data }).catch(() => { });
             }
         }
     }
